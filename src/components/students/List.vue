@@ -10,7 +10,7 @@
       </div>
       <!-- SEARCH INFORMATION -->
       <div class="col l5">
-        <p class="flow-text center"> 148 Alunos encontrados </p>
+        <p class="flow-text center"> [student.length] Alunos encontrados </p>
       </div>
       <!-- SELECT -->
       <div class="input-field col s12 m6 l3 push-l1">
@@ -37,15 +37,16 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="aluno in alunos">
-                <td>{{aluno.nome}}</td>
-                <td>{{aluno.status}}</td>
-                <td>{{aluno.mensalidade}}</td>
+              <tr v-for="student in students.alunos">
+                <td>{{student.aluno.nome}}</td>
+                <td>{{student.aluno.status}}</td>
+                <td>{{student.mensalidade.status}}</td>
               </tr>
             </tbody>
           </table>
       </div>
     </div>
+
     <!-- END TABLE -->
   </div>
 </template>
@@ -55,10 +56,17 @@ import $ from 'jquery'
 export default {
   data () {
     return {
-      alunos:[
-        {nome: 'Mateus Henrique', status:'Ativo', mensalidade:'Débito'},
-        {nome: 'Miau A', status:'Inativo', mensalidade:'Pago'}
-      ]
+      students:[]
+    }
+  },
+  created(){
+          this.$http.get('http://localhost:8000/api/aluno/list').then(response => {
+            this.students = response.body;
+          });
+  },
+  methods:{
+    teste:function(){
+      console.log(this.students);
     }
   }
 }
