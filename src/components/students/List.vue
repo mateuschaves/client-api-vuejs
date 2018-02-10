@@ -5,7 +5,7 @@
       <!-- SEARCH -->
       <div class="input-field col s12 m6 l3">
         <i class="material-icons prefix">search</i>
-        <input id="search" type="search" >
+        <input id="search" type="search" v-model="search">
         <label for="search">Buscar</label>
       </div>
       <!-- SEARCH INFORMATION -->
@@ -23,7 +23,7 @@
            <option value="3">Alunos ativos</option>
          </select>
          <label>Filtrar por</label>
-       </div>
+      </div>
     </div>
     <!-- TABLE -->
     <div class="row">
@@ -38,7 +38,8 @@
             </thead>
             <tbody>
               <tr v-for="student in students.alunos">
-                <td>{{student.aluno.nome}}</td>
+                <td v-show="student.aluno.status == 'Inativo'" class="inactive">{{student.aluno.nome}}</td>
+                <td v-show="student.aluno.status !== 'Inativo'">{{student.aluno.nome}}</td>
                 <td>{{student.aluno.status}}</td>
                 <td>{{student.mensalidade.status}}</td>
               </tr>
@@ -46,17 +47,18 @@
           </table>
       </div>
     </div>
-
     <!-- END TABLE -->
   </div>
 </template>
 <script>
+import searchMixin from '../../mixins/searchMixin';
 import $ from 'jquery'
 
 export default {
   data () {
     return {
-      students:[]
+      students:[],
+      search:''
     }
   },
   created(){
@@ -64,13 +66,12 @@ export default {
             this.students = response.body;
           });
   },
-  methods:{
-    teste:function(){
-      console.log(this.students);
-    }
-  }
+  mixins: [searchMixin]
 }
 </script>
 
 <style>
+.inactive{
+  color:red;
+}
 </style>
