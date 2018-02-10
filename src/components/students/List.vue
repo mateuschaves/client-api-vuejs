@@ -10,7 +10,7 @@
       </div>
       <!-- SEARCH INFORMATION -->
       <div class="col l5">
-        <p class="flow-text center" v-show="search">Buscando aluno {{search}}</p>
+        <p class="flow-text center" v-show="search">Buscando aluno  {{search}}</p>
       </div>
       <!-- SELECT -->
       <div class="input-field col s12 m6 l3 push-l1">
@@ -34,6 +34,7 @@
                   <th>Nome</th>
                   <th>Situação</th>
                   <th>Mensalidade</th>
+                  <th>Ações</th>
               </tr>
             </thead>
             <tbody>
@@ -42,6 +43,11 @@
                 <td v-show="student.aluno.status !== 'Inativo'">{{student.aluno.nome}}</td>
                 <td>{{student.aluno.status}}</td>
                 <td>{{student.mensalidade.status}}</td>
+                <!-- ACTION -->
+                <td v-if="student.mensalidade.status == 'Débito'"><i class="material-icons red-text text-darken-2">attach_money</i></td>
+                <td v-if="student.mensalidade.status == 'Vencido'"><i class="material-icons red-text text-darken-2">attach_money</i></td>
+                <td v-if="student.mensalidade.status == 'A vencer'"><i class="material-icons yellow-text text-darken-2">attach_money</i></td>
+                <td v-if="student.mensalidade.status == 'Pago'"><i class="material-icons green-text text-darken-2">checked</i></td>
               </tr>
             </tbody>
           </table>
