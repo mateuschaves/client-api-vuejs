@@ -5,7 +5,7 @@
       <!-- SEARCH -->
       <div class="input-field col s12 m6 l3">
         <i class="material-icons prefix">search</i>
-        <input id="search" type="search" v-model="search">
+        <input id="search" type="search" v-model="search" placeholder="Encontre alguém =)">
         <label for="search">Buscar</label>
       </div>
       <!-- SEARCH INFORMATION -->
@@ -37,7 +37,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="student in students.alunos">
+              <tr v-for="student in filteredStudents">
                 <td v-show="student.aluno.status == 'Inativo'" class="inactive">{{student.aluno.nome}}</td>
                 <td v-show="student.aluno.status !== 'Inativo'">{{student.aluno.nome}}</td>
                 <td>{{student.aluno.status}}</td>
@@ -66,7 +66,19 @@ export default {
             this.students = response.body;
           });
   },
-  mixins: [searchMixin]
+  computed: {
+    // INTRODUÇÃO A PROGRAMAÇÃO ORIENTADA A GAMBIARRAS I
+    filteredStudents: function(){
+      do {
+        if(typeof this.students.alunos != "undefined")
+        {
+          return this.students.alunos.filter((student) => {
+            return student.aluno.nome.match(this.search);
+          });
+        }
+      } while (typeof this.students.alunos != "undefined");
+    }
+  }
 }
 </script>
 
