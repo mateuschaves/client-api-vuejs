@@ -10,7 +10,7 @@
       </div>
       <!-- SEARCH INFORMATION -->
       <div class="col l5">
-        <p class="flow-text center"> [student.length] Alunos encontrados </p>
+        <p class="flow-text center" v-show="search">Buscando aluno {{search}}</p>
       </div>
       <!-- SELECT -->
       <div class="input-field col s12 m6 l3 push-l1">
